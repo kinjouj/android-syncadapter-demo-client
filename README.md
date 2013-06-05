@@ -1,0 +1,2 @@
+android-syncadapter-demo-client
+===============================
