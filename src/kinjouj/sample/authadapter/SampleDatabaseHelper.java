@@ -1,12 +1,12 @@
 package kinjouj.sample.authadapter;
 
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.api.Scope;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.api.Scope;
 
 @EBean(scope = Scope.Singleton)
 public class SampleDatabaseHelper extends SQLiteOpenHelper {

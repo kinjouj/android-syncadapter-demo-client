@@ -35,14 +35,15 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
 
     public static final String TAG = MainActivity.class.getName();
     private static final int LOADER_ID = 0;
-    private SimpleCursorAdapter mAdapter;
-    private Account mAccount;
 
     @SystemService
     public AccountManager mAccountManager;
 
     @StringRes(R.string.account_type)
     public String mAccountType;
+
+    private SimpleCursorAdapter mAdapter;
+    private Account mAccount;
 
     @AfterViews
     public void initViews() {
@@ -62,6 +63,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
 
     @OptionsItem(R.id.menu_item_setting)
     public void onMenuSettingClick() {
+        Log.v(TAG, "onMenuSettingClick");
+
         Intent intent = new Intent(Settings.ACTION_SYNC_SETTINGS);
         intent.putExtra(Settings.EXTRA_AUTHORITIES, new String[] { AUTHORITY });
 
@@ -70,6 +73,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
 
     @OptionsItem(R.id.menu_item_reload)
     public void onMenuReloadClick() {
+        Log.v(TAG, "onMenuReloadClick");
+
         if (mAccount != null) {
             boolean isSyncable = ContentResolver.isSyncActive(mAccount, AUTHORITY);
 
@@ -124,7 +129,8 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
                         }
                     }
                 )
-                .create().show();
+                .create()
+                .show();
         } else {
             loaderManager.initLoader(LOADER_ID,  null, this);
         }

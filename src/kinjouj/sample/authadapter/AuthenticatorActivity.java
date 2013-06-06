@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.SystemService;
 import com.googlecode.androidannotations.annotations.res.StringRes;
@@ -46,17 +45,20 @@ public class AuthenticatorActivity extends Activity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder
                 .setView(getView())
-                .setPositiveButton("登録", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-
-                        AccountAuthenticatorResponse response = bundle.getParcelable(
-                            KEY_ACCOUNT_AUTHENTICATOR_RESPONSE
-                        );
-                        createAccount(response);
+                .setPositiveButton(
+                    getString(android.R.string.ok),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+    
+                            AccountAuthenticatorResponse response = bundle.getParcelable(
+                                KEY_ACCOUNT_AUTHENTICATOR_RESPONSE
+                            );
+                            createAccount(response);
+                        }
                     }
-                })
+                )
                 .setNegativeButton(
                     getString(android.R.string.cancel),
                     new DialogInterface.OnClickListener() {
@@ -67,13 +69,13 @@ public class AuthenticatorActivity extends Activity {
                         }
                     }
                 )
-                .create().show();
+                .create()
+                .show();
         } else {
             finish();
         }
     }
 
-    @Background
     public void createAccount(AccountAuthenticatorResponse response) {
         String username = toEditTextString(R.id.login_username);
         String password = toEditTextString(R.id.login_password);

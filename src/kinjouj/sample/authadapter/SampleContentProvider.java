@@ -1,6 +1,5 @@
 package kinjouj.sample.authadapter;
 
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -9,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EProvider;
 
@@ -16,12 +16,13 @@ import com.googlecode.androidannotations.annotations.EProvider;
 public class SampleContentProvider extends ContentProvider {
 
     private static final String TAG = SampleContentProvider.class.getName();
-    private static final int REQUEST_SAMPLES = 1;
     public static final String AUTHORITY = "kinjouj.sample.authadapter.provider";
-    private static UriMatcher sMatcher;
+    private static final int REQUEST_SAMPLES = 1;
 
     @Bean
     public SampleDatabaseHelper mDBHelper;
+
+    private static UriMatcher sMatcher;
 
     static {
         sMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -30,6 +31,7 @@ public class SampleContentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
+        Log.v(TAG, "getType");
         return "vnd.android.cursor.dir/" + AUTHORITY;
     }
 

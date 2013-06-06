@@ -9,12 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.HttpsClient;
 import com.googlecode.androidannotations.annotations.RootContext;
 import com.googlecode.androidannotations.annotations.SystemService;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import static kinjouj.sample.authadapter.AuthenticatorActivity.ACTION_LOGIN;
 
@@ -25,9 +24,6 @@ class SampleAccountAuthenticator extends AbstractAccountAuthenticator {
 
     @RootContext
     public Context mContext;
-
-    @HttpsClient
-    public DefaultHttpClient mHttpClient;
 
     @Bean
     public Service service;

@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
+
 import com.google.gson.internal.LinkedHashTreeMap;
 import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.res.StringRes;
 import com.googlecode.androidannotations.api.Scope;
+
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,7 +36,7 @@ public class Service {
     @Bean
     public OAuth oauth;
 
-    protected Service(Context context) {
+    public Service(Context context) {
         restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
