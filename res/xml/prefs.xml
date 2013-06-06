@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="設定" />
+    <PreferenceScreen android:key="account_settings" android:title="Account Settings">
+        <intent
+            android:targetPackage="kinjouj.sample.authadapter"
+            android:targetClass="kinjouj.sample.authadapter.AuthenticatorPreferenceActivity" />
+    </PreferenceScreen>
+</PreferenceScreen>

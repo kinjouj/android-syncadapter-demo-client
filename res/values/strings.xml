@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<resources>
+    <string name="app_name">Sample</string>
+
+    <string name="account_missing_dialog_title">認証アカウントがありません</string>
+    <string name="account_missing_dialog_summary">認証アカウントの設定がされていません。オッケーをアカウント設定画面を開きます</string>
+
+    <string name="account_type">kinjouj.sample.authadapter</string>
+    <string name="account_label">サンプルアプリ認証アカウント</string>
+ 
+    <string name="preference_category_extra_title">その他</string>
+    <string name="preference_category_extra_nickname_title">ニックネーム</string>
+    <string name="preference_category_extra_nickname_summary">ニックネームを設定</string>
+
+    <string name="provider_name">kinjouj.sample.authadapter.provider</string>
+</resources>
