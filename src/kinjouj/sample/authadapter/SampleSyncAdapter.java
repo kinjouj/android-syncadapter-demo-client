@@ -66,7 +66,11 @@ public class SampleSyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            mAccountManager.invalidateAuthToken(mAccountType, authToken);
         }
+
+        Log.v(TAG, "token: " + authToken);
 
         return authToken;
     }
