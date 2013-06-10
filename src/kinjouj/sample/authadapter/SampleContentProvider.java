@@ -16,7 +16,9 @@ import com.googlecode.androidannotations.annotations.EProvider;
 public class SampleContentProvider extends ContentProvider {
 
     private static final String TAG = SampleContentProvider.class.getName();
+
     public static final String AUTHORITY = "kinjouj.sample.authadapter.provider";
+
     private static final int REQUEST_SAMPLES = 1;
 
     @Bean

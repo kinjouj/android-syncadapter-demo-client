@@ -42,12 +42,15 @@ public class SampleSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
         ContentProviderClient provider, SyncResult result) {
+        onPerformSync(account);
+    }
 
+    private void onPerformSync(Account account){
         Log.v(TAG, "onPerformSync " + new Date());
-
+    
         String authToken = getAuthToken(account);
         List<Sample> samples = service.getSamples(authToken);
-
+    
         SampleContantProviderManager.insert(getContext().getContentResolver(), samples);
     }
 
@@ -69,8 +72,6 @@ public class SampleSyncAdapter extends AbstractThreadedSyncAdapter {
         } finally {
             mAccountManager.invalidateAuthToken(mAccountType, authToken);
         }
-
-        Log.v(TAG, "token: " + authToken);
 
         return authToken;
     }

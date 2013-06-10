@@ -75,10 +75,8 @@ class SampleAccountAuthenticator extends AbstractAccountAuthenticator {
             return null;
         }
 
-        String token = service.getAccessToken(
-            account.name,
-            mAccountManager.getPassword(account)
-        );
+        String password = mAccountManager.getPassword(account);
+        String token = service.getAccessToken(account.name, password);
 
         Bundle b = new Bundle();
         b.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);

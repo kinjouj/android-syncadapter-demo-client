@@ -69,6 +69,7 @@ public class AuthenticatorActivity extends Activity {
                         }
                     }
                 )
+                .setOnKeyListener(new BackPressKeyDialogListener())
                 .create()
                 .show();
         } else {
@@ -110,7 +111,9 @@ public class AuthenticatorActivity extends Activity {
         String text = null;
 
         if (mLoginView != null) {
-            text = ((EditText)mLoginView.findViewById(resId)).getText().toString();
+            text = ((EditText)mLoginView.findViewById(resId))
+                .getText()
+                .toString();
         }
 
         return text;

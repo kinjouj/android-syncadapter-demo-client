@@ -17,7 +17,6 @@ import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.googlecode.androidannotations.annotations.AfterViews;
@@ -33,7 +32,7 @@ import static kinjouj.sample.authadapter.SampleContentProvider.AUTHORITY;
 @OptionsMenu(R.menu.main)
 public class MainActivity extends SherlockFragmentActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    public static final String TAG = MainActivity.class.getName();
+    private static final String TAG = MainActivity.class.getName();
     private static final int LOADER_ID = 0;
 
     @SystemService
@@ -43,12 +42,10 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
     public String mAccountType;
 
     private SimpleCursorAdapter mAdapter;
-    private Account mAccount;
 
     @AfterViews
     public void initViews() {
         Log.v(TAG, "initViews");
-
         mAdapter = new SimpleCursorAdapter(
             this,
             android.R.layout.simple_expandable_list_item_2,
@@ -74,47 +71,34 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
     @OptionsItem(R.id.menu_item_reload)
     public void onMenuReloadClick() {
         Log.v(TAG, "onMenuReloadClick");
+        Account account = findAccount();
 
-        if (mAccount != null) {
-            boolean isSyncable = ContentResolver.isSyncActive(mAccount, AUTHORITY);
-
-            if (isSyncable) {
-                ContentResolver.requestSync(mAccount, AUTHORITY, new Bundle());
-                return;
-            }
+        if (ContentResolver.isSyncActive(account, AUTHORITY)) {
+            ContentResolver.requestSync(account, AUTHORITY, new Bundle());
         }
-
-        Toast.makeText(this, "please enable syncable", Toast.LENGTH_LONG).show();
-        onMenuSettingClick();
     }
 
     @Override
     public void onResume() {
         Log.v(TAG, "onResume");
         super.onResume();
-        mAccount = findAccount();
 
         LoaderManager loaderManager = getSupportLoaderManager();
 
-        if (mAccount == null) {
-            mAdapter.swapCursor(null);
-            mAdapter.notifyDataSetChanged();
-            mAdapter.notifyDataSetInvalidated();
-
+        if (!hasAccount()) {
             if (loaderManager.hasRunningLoaders()) {
                 loaderManager.destroyLoader(LOADER_ID);
             }
 
+            mAdapter.swapCursor(null);
+            mAdapter.notifyDataSetChanged();
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder
-                .setTitle(
-                    getString(R.string.account_missing_dialog_title)
-                )
-                .setMessage(
-                    getString(R.string.account_missing_dialog_summary)
-                )
+                .setTitle(getString(R.string.account_missing_dialog_title))
+                .setMessage(getString(R.string.account_missing_dialog_summary))
                 .setPositiveButton(
-                    getString(android.R.string.ok),
+                    android.R.string.ok,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             startActivity(new Intent(Settings.ACTION_ADD_ACCOUNT));
@@ -122,13 +106,15 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
                     }
                 )
                 .setNegativeButton(
-                    getString(android.R.string.cancel),
+                    android.R.string.cancel,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
                             finish();
                         }
                     }
                 )
+                .setOnKeyListener(new BackPressKeyDialogListener())
                 .create()
                 .show();
         } else {
@@ -161,5 +147,9 @@ public class MainActivity extends SherlockFragmentActivity implements LoaderMana
     private Account findAccount() {
         Account[] accounts = mAccountManager.getAccountsByType(mAccountType);
         return accounts.length > 0 ? accounts[0] : null;
+    }
+
+    private boolean hasAccount() {
+        return findAccount() != null ? true : false;
     }
 }

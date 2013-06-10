@@ -22,4 +22,3 @@ local.properties
 .factorypath
 
 apt
-res/values/*-real.xml
